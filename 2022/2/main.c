@@ -13,7 +13,7 @@ void stop_at_char(char*, char);
 /*
 	chose rock		score += 1
 	chose paper		score += 2
-	chose scissors	score += 1
+	chose scissors	score += 3
 	lost 			score += 0
 	draw			score += 3
 	win				score += 6
