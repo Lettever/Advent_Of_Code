@@ -233,11 +233,9 @@ void calc_final_size(folder_ptr start, u64* size)
 {
 	if(start->size <= 100000)
 		*size += start->size;
-	{
-		u8 i;
-		for(i = 0; i < start->folder_size; i++)
-			calc_final_size(start->folder_array[i], size);
-	}
+	u8 i;
+	for(i = 0; i < start->folder_size; i++)
+		calc_final_size(start->folder_array[i], size);
 }
 
 void find_dir(folder_ptr start, u64* curr_size)
