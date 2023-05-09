@@ -64,9 +64,7 @@ int main()
 		printf("%s", buffer);
 		stop_at(buffer, '\n');
 		if(cmp_str(buffer, "$ cd ..", 7) == true)
-		{
 			current_folder = current_folder->prev;
-		}
 		else if(cmp_str(buffer, "$ cd", 4) == true)
 		{
 			temp_folder = create_folder(buffer + 5);
