@@ -245,7 +245,6 @@ void find_dir(folder_ptr start, u64* curr_size)
 	//total: 	   70000000
 	//needed_size: 30000000
 	//used_size:   42558312
-	//10148525 is too high
 	if((start->size < *curr_size) && (start->size >= 2558312))
 		*curr_size = start->size;
 	u8 i;
