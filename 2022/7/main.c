@@ -7,8 +7,6 @@
 #define MAX_BUFFER 1024
 #define MAX_CAP 20
 
-#define NEEDED_SPACE 8381165
-
 const string numbers = "0123456789";
 
 typedef struct
