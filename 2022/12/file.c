@@ -179,7 +179,7 @@ int bfs(graph graph, int start_i, int start_j)
 			}
 		}
 		if(queues[destination]->size == 0)	//if this queue is empty it means there are no neighbours not visited
-			return ERROR;					//returning the error value
+			return ERROR;
 		source = 1 - source;
 		destination = 1 - destination;
 	}
