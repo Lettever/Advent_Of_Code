@@ -40,7 +40,7 @@ int part2()
         string []display = segments[$ - 4 .. $];
         string one = hints.filter!(x => x.length == 2).array[0];
         string four = hints.filter!(x => x.length == 4).array[0];
-        int [string]undecoder;
+        int [sting]undecoder;
         /*
             number length match(1) match(4)
                  0      7        2        3
@@ -54,32 +54,32 @@ int part2()
                  8      7        2        4
                  9      6        2        4
         */
-        foreach(i; hints)
+        foreach(hint; hints)
         {
-            if(i.length == 2)
-                undecoder[i] = 1;
-            else if(i.length == 4)
-                undecoder[i] = 4;
-            else if(i.length == 3)
-                undecoder[i] = 7;
-            else if(i.length == 7)
-                undecoder[i] = 8;
-            else if(i.length == 5)
-                if(i.match_chars(one) == 1 && i.match_chars(four) == 2)
-                    undecoder[i] = 2;
-                else if(i.match_chars(one) == 2 && i.match_chars(four) == 3)
-                    undecoder[i] = 3;
-                else if(i.match_chars(one) == 1 && i.match_chars(four) == 3)
-                    undecoder[i] = 5;
+            if(hint.length == 2)
+                undecoder[hint] = 1;
+            else if(hint.length == 4)
+                undecoder[hint] = 4;
+            else if(hint.length == 3)
+                undecoder[hint] = 7;
+            else if(hint.length == 7)
+                undecoder[hint] = 8;
+            else if(hint.length == 5)
+                if(hint.match_segments(one) == 1 && hint.match_segments(four) == 2)
+                    undecoder[hint] = 2;
+                else if(hint.match_segments(one) == 2 && hint.match_segments(four) == 3)
+                    undecoder[hint] = 3;
+                else if(hint.match_segments(one) == 1 && hint.match_segments(four) == 3)
+                    undecoder[hint] = 5;
                 else
                     assert(0);
-            else if(i.length == 6)
-                if(i.match_chars(one) == 1 && i.match_chars(four) == 3)
-                    undecoder[i] = 6;
-                else if(i.match_chars(one) == 2 && i.match_chars(four) == 4)
-                    undecoder[i] = 9;
-                else if(i.match_chars(one) == 2 && i.match_chars(four) == 3)
-                    undecoder[i] = 0;
+            else if(hint.length == 6)
+                if(hint.match_segments(one) == 1 && hint.match_segments(four) == 3)
+                    undecoder[hint] = 6;
+                else if(hint.match_segments(one) == 2 && hint.match_segments(four) == 4)
+                    undecoder[hint] = 9;
+                else if(hint.match_segments(one) == 2 && hint.match_segments(four) == 3)
+                    undecoder[hint] = 0;
                 else
                     assert(0);
             else
@@ -92,7 +92,7 @@ int part2()
     input.close;
     return result;
 }
-int match_chars(string str1, string str2)
+int match_segments(string str1, string str2)
 {
     int sum;
     foreach(char1; str1)
