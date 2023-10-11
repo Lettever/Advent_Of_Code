@@ -3,6 +3,7 @@ import std.string;
 import std.algorithm;
 import std.conv;
 import std.array;
+
 void main()
 {
     writeln("part1 ", part1);
@@ -12,14 +13,11 @@ int part1()
 {
     File input = File("file.txt", "r");
     string [][]lines;
+
     while(!input.eof)
-    {
-        string line = input.readln.chomp;
-        if(line == "")
-            break;
-        lines ~= line.split(" ").filter!(x => x != "|").array;
-    }
+        lines ~= input.readln.chomp.split(" ").filter!(x => x != "|").array;
     input.close;
+
     int sum = 0;
     for(int i = 0; i < lines.length; i++)
         for(int j = 10; j < lines[i].length; j++)
@@ -30,53 +28,82 @@ int part1()
                 default:
             }
         }
+
     return sum;
 }
 int part2()
 {
     File input = File("file.txt", "r");
-    string [][]lines;
+    int result;
+
     while(!input.eof)
     {
-        /*
-            a -> [0, 2, 3, 5, 6, 7, 8, 9]    -> 8
-            b -> [0, 4, 5, 6, 8, 9]          -> 6
-            c -> [0, 1, 2, 3, 4, 7, 8, 9]    -> 8
-            d -> [2, 3, 4, 5, 6, 8, 9]       -> 7
-            e -> [0, 2, 6, 8]                -> 4
-            f -> [0, 1, 3, 4, 5, 6, 7, 8, 9] -> 9
-            g -> [0, 2, 3, 5, 6, 8, 9]       -> 7
+        int sum;
+        string []a = input.readln.chomp.split(" ").filter!(x => x != "|").array;
+        foreach(ref b; a)
+            b = b.to!(dchar[]).sort.to!string;
 
-            0 -> abcefg  -> 6
-            1 -> cf      -> 2
-            2 -> acdeg   -> 5
-            3 -> acdfg   -> 5
-            4 -> bcdf    -> 4
-            5 -> abdfg   -> 5
-            6 -> abdefg  -> 6
-            7 -> acf     -> 3
-            8 -> abcdefg -> 8
-            9 -> abcdfg  -> 7
+        string []line = a[0 .. $ - 4];
+        string []b = a[$ - 4 .. $];
+        string one = line.filter!(x => x.length == 2).array[0];
+        string four = line.filter!(x => x.length == 4).array[0];
+        int [string]decoded;
+        /*
+            number length match(1) match(4)
+                 0      7        2        3
+                 1      2        2        2
+                 2      5        1        2
+                 3      5        2        3
+                 4      4        2        4
+                 5      5        1        3
+                 6      6        1        3
+                 7      3        2        2
+                 8      7        2        4
+                 9      6        2        4
         */
-        string line = input.readln.chomp;
-        if(line == "")
-            break;
-        lines ~= line.split(" ").filter!(x => x != "|").array;
+        foreach(i; line)
+        {
+            if(i.length == 2)
+                decoded[i] = 1;
+            else if(i.length == 4)
+                decoded[i] = 4;
+            else if(i.length == 3)
+                decoded[i] = 7;
+            else if(i.length == 7)
+                decoded[i] = 8;
+            else if(i.length == 5)
+                if(i.match_chars(one) == 1 && i.match_chars(four) == 2)
+                    decoded[i] = 2;
+                else if(i.match_chars(one) == 2 && i.match_chars(four) == 3)
+                    decoded[i] = 3;
+                else if(i.match_chars(one) == 1 && i.match_chars(four) == 3)
+                    decoded[i] = 5;
+                else
+                    assert(0);
+            else if(i.length == 6)
+                if(i.match_chars(one) == 1 && i.match_chars(four) == 3)
+                    decoded[i] = 6;
+                else if(i.match_chars(one) == 2 && i.match_chars(four) == 4)
+                    decoded[i] = 9;
+                else if(i.match_chars(one) == 2 && i.match_chars(four) == 3)
+                    decoded[i] = 0;
+                else
+                    assert(0);
+            else assert(0);
+        }
+        foreach(key, value; b)
+            sum = sum * 10 + decoded[value];
+        result += sum;
     }
     input.close;
-    
-    const string []numbers_to_crt = [
-            "abcefg",
-            "cf",
-            "acdeg",
-            "acdfg",
-            "bcdf",
-            "abdfg",
-            "abdefg",
-            "acf",
-            "abcdefg",
-            "abcdfg"];
-    foreach(i; numbers_to_crt)
-        writeln(i);
-    return 0;
+    return result;
+}
+int match_chars(string str1, string str2)
+{
+    int sum;
+    foreach(char1; str1)
+        foreach(char2; str2)
+            if(char1 == char2)
+                sum++;
+    return sum;
 }
