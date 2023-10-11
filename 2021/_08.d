@@ -12,23 +12,17 @@ void main()
 int part1()
 {
     File input = File("file.txt", "r");
-    string [][]lines;
+    int sum = 0;
 
     while(!input.eof)
-        lines ~= input.readln.chomp.split(" ").filter!(x => x != "|").array;
-    input.close;
-
-    int sum = 0;
-    for(int i = 0; i < lines.length; i++)
-        for(int j = 10; j < lines[i].length; j++)
-        {
-            switch(lines[i][j].length)
+        foreach(str; input.readln.chomp.split(" ").filter!(x => x != "|").array[$ - 4 .. $])
+            switch(str.length)
             {
-                case 2, 4, 3, 7 : sum++; goto default;
-                default:
+                case 2, 4, 3, 7 : sum++; break;
+                default :
             }
-        }
-
+    input.close;
+ 
     return sum;
 }
 int part2()
@@ -39,15 +33,13 @@ int part2()
     while(!input.eof)
     {
         int sum;
-        string []a = input.readln.chomp.split(" ").filter!(x => x != "|").array;
-        foreach(ref b; a)
-            b = b.to!(dchar[]).sort.to!string;
+        string []segments = input.readln.chomp.split(" ").filter!(x => x != "|").array.map!(x => x.to!(dchar[]).sort.to!string).array;
 
-        string []line = a[0 .. $ - 4];
-        string []b = a[$ - 4 .. $];
-        string one = line.filter!(x => x.length == 2).array[0];
-        string four = line.filter!(x => x.length == 4).array[0];
-        int [string]decoded;
+        string []hints = segments[0 .. $ - 4];
+        string []display = segments[$ - 4 .. $];
+        string one = hints.filter!(x => x.length == 2).array[0];
+        string four = hints.filter!(x => x.length == 4).array[0];
+        int [string]undecoder;
         /*
             number length match(1) match(4)
                  0      7        2        3
@@ -61,38 +53,38 @@ int part2()
                  8      7        2        4
                  9      6        2        4
         */
-        foreach(i; line)
+        foreach(i; hints)
         {
             if(i.length == 2)
-                decoded[i] = 1;
+                undecoder[i] = 1;
             else if(i.length == 4)
-                decoded[i] = 4;
+                undecoder[i] = 4;
             else if(i.length == 3)
-                decoded[i] = 7;
+                undecoder[i] = 7;
             else if(i.length == 7)
-                decoded[i] = 8;
+                undecoder[i] = 8;
             else if(i.length == 5)
                 if(i.match_chars(one) == 1 && i.match_chars(four) == 2)
-                    decoded[i] = 2;
+                    undecoder[i] = 2;
                 else if(i.match_chars(one) == 2 && i.match_chars(four) == 3)
-                    decoded[i] = 3;
+                    undecoder[i] = 3;
                 else if(i.match_chars(one) == 1 && i.match_chars(four) == 3)
-                    decoded[i] = 5;
+                    undecoder[i] = 5;
                 else
                     assert(0);
             else if(i.length == 6)
                 if(i.match_chars(one) == 1 && i.match_chars(four) == 3)
-                    decoded[i] = 6;
+                    undecoder[i] = 6;
                 else if(i.match_chars(one) == 2 && i.match_chars(four) == 4)
-                    decoded[i] = 9;
+                    undecoder[i] = 9;
                 else if(i.match_chars(one) == 2 && i.match_chars(four) == 3)
-                    decoded[i] = 0;
+                    undecoder[i] = 0;
                 else
                     assert(0);
             else assert(0);
         }
-        foreach(key, value; b)
-            sum = sum * 10 + decoded[value];
+        foreach(key, value; display)
+            sum = sum * 10 + undecoder[value];
         result += sum;
     }
     input.close;
