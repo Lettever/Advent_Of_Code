@@ -97,7 +97,6 @@ int match_chars(string str1, string str2)
     int sum;
     foreach(char1; str1)
         foreach(char2; str2)
-            if(char1 == char2)
-                sum++;
+            sum += (char1 == char2);
     return sum;
 }
