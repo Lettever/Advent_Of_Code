@@ -85,7 +85,7 @@ int part2()
             else
                 assert(0);
         }
-        foreach(key, value; display)
+        foreach(value; display)
             sum = sum * 10 + undecoder[value];
         result += sum;
     }
