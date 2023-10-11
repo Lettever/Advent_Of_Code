@@ -40,7 +40,7 @@ int part2()
         string []display = segments[$ - 4 .. $];
         string one = hints.filter!(x => x.length == 2).array[0];
         string four = hints.filter!(x => x.length == 4).array[0];
-        int [sting]undecoder;
+        int [string]undecoder;
         /*
             number length match(1) match(4)
                  0      7        2        3
