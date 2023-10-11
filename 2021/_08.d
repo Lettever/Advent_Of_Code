@@ -33,7 +33,8 @@ int part2()
     while(!input.eof)
     {
         int sum;
-        string []segments = input.readln.chomp.split(" ").filter!(x => x != "|").array.map!(x => x.to!(dchar[]).sort.to!string).array;
+        string []segments = input.readln.chomp.split(" ").filter!(x => x != "|").array
+                            .map!(x => x.to!(dchar[]).sort.to!string).array;
 
         string []hints = segments[0 .. $ - 4];
         string []display = segments[$ - 4 .. $];
@@ -81,7 +82,8 @@ int part2()
                     undecoder[i] = 0;
                 else
                     assert(0);
-            else assert(0);
+            else
+                assert(0);
         }
         foreach(key, value; display)
             sum = sum * 10 + undecoder[value];
