@@ -3,6 +3,7 @@ import std.string;
 import std.algorithm;
 import std.conv;
 import std.array;
+import std.typecons;
 
 void main()
 {
@@ -33,29 +34,44 @@ int part2()
     while(!input.eof)
     {
         int sum;
-        string []segments = input.readln.chomp.split(" ").filter!(x => x != "|").array
+        string []segments = input.readln.chomp.split(" ").filter!(x => x != "|")
                             .map!(x => x.to!(dchar[]).sort.to!string).array;
 
         string []hints = segments[0 .. $ - 4];
         string []display = segments[$ - 4 .. $];
-        string one = hints.filter!(x => x.length == 2).array[0];
-        string four = hints.filter!(x => x.length == 4).array[0];
+        string one = segments.filter!(x => x.length == 2).array[0];
+        string four = segments.filter!(x => x.length == 4).array[0];
         int [string]undecoder;
-        /*
-            number length match(1) match(4)
-                 0      7        2        3
-                 1      2        2        2
-                 2      5        1        2
-                 3      5        2        3
-                 4      4        2        4
-                 5      5        1        3
-                 6      6        1        3
-                 7      3        2        2
-                 8      7        2        4
-                 9      6        2        4
-        */
+
         foreach(hint; hints)
         {
+            auto cmp = tuple(hint.length, hint.match_segments(one), hint.match_segments(four));
+            undecoder[hint] =
+                cmp == tuple(2, 2, 2) ? 1 :
+                cmp == tuple(4, 2, 4) ? 4 :
+                cmp == tuple(3, 2, 2) ? 7 :
+                cmp == tuple(7, 2, 4) ? 8 :
+                cmp == tuple(5, 1, 2) ? 2 :
+                cmp == tuple(5, 2, 3) ? 3 :
+                cmp == tuple(5, 1, 3) ? 5 :
+                cmp == tuple(6, 1, 3) ? 6 :
+                cmp == tuple(6, 2, 4) ? 9 :
+                cmp == tuple(6, 2, 3) ? 0 : assert(0);
+            /*
+            auto cmp = tuple(hint.length, hint.match_segments(one), hint.match_segments(four));
+            if(cmp == tuple(2, 2, 2))           undecoder[hint] = 1;
+            else if(cmp == tuple(4, 2, 4))      undecoder[hint] = 4;
+            else if(cmp == tuple(3, 2, 2))      undecoder[hint] = 7;
+            else if(cmp == tuple(7, 2, 4))      undecoder[hint] = 8;
+            else if(cmp == tuple(5, 1, 2))      undecoder[hint] = 2;
+            else if(cmp == tuple(5, 2, 3))      undecoder[hint] = 3;
+            else if(cmp == tuple(5, 1, 3))      undecoder[hint] = 5;
+            else if(cmp == tuple(6, 1, 3))      undecoder[hint] = 6;
+            else if(cmp == tuple(6, 2, 4))      undecoder[hint] = 9;
+            else if(cmp == tuple(6, 2, 3))      undecoder[hint] = 0;
+            else assert(0);
+            */
+            /*
             if(hint.length == 2)
                 undecoder[hint] = 1;
             else if(hint.length == 4)
@@ -84,6 +100,7 @@ int part2()
                     assert(0);
             else
                 assert(0);
+            */
         }
         foreach(value; display)
             sum = sum * 10 + undecoder[value];
