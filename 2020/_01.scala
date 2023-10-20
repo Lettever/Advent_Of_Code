@@ -10,7 +10,6 @@ def part1() : Int =
             j <- i + 1 until numbers.length do
             if(numbers(i) + numbers(j) == 2020)
                 break (numbers(i) * numbers(j))
-        -1
 
 def part2() : Int =
     val numbers = io.Source.fromFile("input.txt").getLines.map(line => line.toInt).toArray
@@ -20,4 +19,3 @@ def part2() : Int =
             k <- i + 2 until numbers.length do
                 if(numbers(i) + numbers(j) + numbers(k) == 2020)
                     break (numbers(i) * numbers(j) * numbers(k))
-        -1
