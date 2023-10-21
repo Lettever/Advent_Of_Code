@@ -8,7 +8,6 @@ def solve(func : (String, Char, Int, Int) => Boolean) : Int =
         case s"$num1-$num2 $letter: $str" =>
             func(str, letter(0), num1.toInt, num2.toInt)
     )
-    
 
 def part1(str : String, ch : Char, min : Int, max : Int) : Boolean =
     min <= str.count(_ == ch) && str.count(_ == ch) <= max
