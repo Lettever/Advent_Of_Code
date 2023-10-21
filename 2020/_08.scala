@@ -16,8 +16,6 @@ def part1() : Int =
             case ("jmp", num) =>
                 index += num
             case _ => index += 1
-    println(lines(index))
-    println(index)
     acc
 
 def part2() : Int =
