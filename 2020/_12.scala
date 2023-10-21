@@ -24,14 +24,14 @@ class Ferry(var pos : Position, var dir : Char):
  
     def rotate(str : String) = 
         val compass = Array('N', 'E', 'S', 'W')
-        var a = compass.indexOf(dir) + {
+        var index = compass.indexOf(dir) + {
             str(0) match
                 case 'R' => str.drop(1).toInt / 90
                 case 'L' => -str.drop(1).toInt / 90
         }
-        while(a < 0) a += 4
-        while(a >= 4) a -= 4
-        dir = compass(a)
+        while(index < 0) a += 4
+        while(index >= 4) a -= 4
+        dir = compass(index)
 
 @main def AoC() =
     println("part1 " + part1())
