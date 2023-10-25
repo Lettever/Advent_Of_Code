@@ -1,3 +1,8 @@
+import scala.math.cos
+import scala.math.sin
+
+@inline final val PI = java.lang.Math.PI
+
 class Position(var x : Int, var y : Int):
     def +(pos2 : Position) = Position(x + pos2.x, y + pos2.y) 
     def *(num : Int) = Position(x * num, y * num)
@@ -20,17 +25,22 @@ class Ferry(var pos : Position, var dir : Char):
                     case 'S' => Position(0, -length)
                     case 'W' => Position(-length, 0)
             }            
- 
-    def rotate(str : String) = 
-        val compass = Array('N', 'E', 'S', 'W')
-        var index = compass.indexOf(dir) + {
-            str(0) match
-                case 'R' => str.drop(1).toInt / 90
-                case 'L' => -str.drop(1).toInt / 90
-        }
-        while(index < 0) a += 4
-        while(index >= 4) a -= 4
-        dir = compass(index)
+    def rotate(str : String, center : Position = Position(0, 0)) = 
+        val trig = (
+            if str(0) == 'L' then (
+                cos(str.drop(1).toDouble * PI / 180).toInt,
+                sin(str.drop(1).toDouble * PI / 180).toInt
+            )
+            else (
+                cos(-str.drop(1).toDouble * PI / 180).toInt,
+                sin(-str.drop(1).toDouble * PI / 180).toInt
+            )
+        )
+        this.pos -= center
+        val xnew = pos.x * trig(0) - pos.y * trig(1)
+        val ynew = pos.x * trig(1) + pos.y * trig(0)
+        pos.x = xnew + center.x
+        pos.y = ynew + center.y
 
 @main def AoC() =
     println("part1 " + part1())
@@ -50,8 +60,11 @@ def part2() : Int =
     for line <- io.Source.fromFile("input.txt").getLines() do
         line(0) match
             case 'N' | 'E' | 'S' | 'W' => waypoint.move(line)
-            case 'L' | 'R' => println("TODO: Rotation")
-            case 'F' => println("TODO: Forward")
+            case 'L' | 'R' => waypoint.rotate(line, ferry.pos)
+            case 'F' => 
+                val distance = waypoint.pos - ferry.pos
+                ferry.pos    += distance * line.drop(1).toInt
+                waypoint.pos += distance * line.drop(1).toInt
     manhattan_distance(ferry.pos, Position(0, 0))
 
 def manhattan_distance(pos1 : Position, pos2 : Position) : Int = (pos1 - pos2).abs().sum()
