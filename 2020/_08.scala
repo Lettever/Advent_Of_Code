@@ -9,17 +9,17 @@ def part2() : Int =
     val lines = io.Source.fromFile("input.txt").getLines().toArray
     boundary:
         for i <- 0 until lines.length do
-            val a = parse(lines(i))
-            if a(0) == "nop" then
-                lines(i) = f"jmp ${a(1)}"
-                val b = calculate(lines)
-                if b(1) then break(b(0))
-                lines(i) = f"nop ${a(1)}"
-            else if a(0) == "jmp" then
-                lines(i) = f"nop ${a(1)}"
-                val b = calculate(lines)
-                if b(1) then break(b(0))
-                lines(i) = f"jmp ${a(1)}"
+            val (command, number) = parse(lines(i))
+            if command == "nop" then 
+                lines(i) = f"jmp $number"
+                val (acc, finished) = calculate(lines)
+                if finished then break(acc)
+                lines(i) = f"nop ${number}"
+            else if command == "jmp" then
+                lines(i) = f"nop $number"
+                val (acc, finished) = calculate(lines)
+                if finished then break(acc)
+                lines(i) = f"jmp ${number}"
         -1
 
 def parse(str : String) : (String, Int) =
