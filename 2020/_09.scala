@@ -7,32 +7,34 @@ import scala.util.boundary, boundary.break
 def part1() : Long =
     val numbers = io.Source.fromFile("input.txt").getLines().map(_.toLong).toArray[Long]
     boundary:
-        for i <- 0 until numbers.length - 25; j = numbers.length.min(i + 25) do
-            if(two_sum(numbers, i, j, numbers(j)) == (-1, -1)) then break(numbers(j)) 
-        -1  
+        for window <- numbers.sliding(26) do
+            if two_sum(window) == (-1, -1) then break(window.last)
+        -1
 
 def part2() : Long =
     val numbers = io.Source.fromFile("input.txt").getLines().map(_.toLong).toArray
-    val invalid_number = 1124361034
-    var (i, j) = (0, 1)
+    val invalid_number = part1()
+    var (left, right) = (0, 1)
     var (i2, j2) = (0, 0)
     var max_slice = 0
-    while(i < numbers.length && j < numbers.length) do
-        val sum = numbers.slice(i, j + 1).sum
+    while(left < numbers.length && right < numbers.length) do
+        val sum = numbers.take(right).drop(left).sum
         if sum == invalid_number then
-            if j + 1 - i > max_slice then
-                max_slice = j + 1 - i
-                i2 = i
-                j2 = j
-            j += 1
-        else if(sum > invalid_number) then i += 1
-        else if(sum < invalid_number) then j += 1
-    val sliced = numbers.slice(i2, j2 + 1)
+            if right + 1 - left > max_slice then
+                max_slice = right + 1 - left
+                i2 = left
+                j2 = right
+            right += 1
+        else if(sum > invalid_number) then left  += 1
+        else if(sum < invalid_number) then right += 1
+    val sliced = numbers.take(j2).drop(i2)
     sliced.min + sliced.max
 
-def two_sum(array : Array[Long], left : Int, right : Int, num : Long) : (Int, Int) =
+def two_sum(window : Array[Long]) : (Int, Int) = 
+    require(window.length == 26)
+    val target = window.last
     boundary:
-        for i <- left  until right
-            j <- i + 1 until right do
-                if(array(i) + array(j) == num) then break((i, j))
+        for i <- 0     until window.length - 1
+            j <- i + 1 until window.length - 1 do
+                if window(i) + window(j) == target then break((i, j))
         (-1, -1)
