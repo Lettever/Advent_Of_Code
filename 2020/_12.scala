@@ -6,7 +6,6 @@ class Position(var x : Int, var y : Int):
     def abs() = Position(x.abs, y.abs)
 
 class Ferry(var pos : Position, var dir : Char):
-    override def toString(): String = f"${pos.x} ${pos.y} $dir"
     def move(str : String) =
         val length = str.drop(1).toInt
         pos += {
