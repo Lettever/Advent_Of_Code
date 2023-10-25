@@ -55,7 +55,4 @@ def part2() : Int =
             case 'F' => println("TODO: Forward")
     manhattan_distance(ferry.pos, Position(0, 0))
 
-extension (num : Int)
-    def in_range(min : Int, max : Int) = min <= num && num <= max
-
 def manhattan_distance(pos1 : Position, pos2 : Position) : Int = (pos1 - pos2).abs().sum()
