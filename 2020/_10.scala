@@ -21,3 +21,11 @@ def part2() : Long =
     for i <- range do
         if cumSum(i) != 0 then cumSum(i) = cumSum(i + 1) + cumSum(i + 2) + cumSum(i + 3)
     cumSum(0)
+    /*
+    val windows = cumSum.sliding(4)
+    windows.foldRight(0L) {
+        case (array, total) =>
+            if array.last == 0 then 0
+            else array.dropRight(1).sum
+    }
+    */
