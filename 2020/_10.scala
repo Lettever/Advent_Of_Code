@@ -26,6 +26,6 @@ def part2() : Long =
     windows.foldRight(0L) {
         case (array, total) =>
             if array.last == 0 then 0
-            else array.dropRight(1).sum
+            else total + array.dropRight(1).sum
     }
     */
