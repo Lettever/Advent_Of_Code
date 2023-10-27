@@ -25,7 +25,7 @@ def part2() : Long =
     val windows = cumSum.sliding(4)
     windows.foldRight(0L) {
         case (array, total) =>
-            if array.last == 0 then 0
+            if array.last == 0 then total
             else total + array.dropRight(1).sum
     }
     */
