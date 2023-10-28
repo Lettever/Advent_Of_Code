@@ -28,4 +28,10 @@ def part2() : Long =
             if array.last == 0 then total
             else total + array.dropRight(1).sum
     }
+    */   
+    /*
+        val a = cumSum.sliding(4).foldRight(Array.empty[Long]) {
+            case (array, arr) =>
+                (array ++ (if array.last == 0 then 0 else arr.dropRight(1).sum))
+        }
     */
