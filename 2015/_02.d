@@ -5,7 +5,6 @@ import std.algorithm;
 
 void main()
 {
-    writeln(area(4, 2, 3));
     writeln("part1 ", part1);
     writeln("part2 ", part2);
 }
