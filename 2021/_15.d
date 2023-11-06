@@ -87,18 +87,18 @@ int part2()
 }
 int dijkstra(int [][]cost)
 {
-	Point [][]array;
+	Point [][]matrix;
 	for(int i = 0; i < cost.length; i++)
 	{
 		Point []line;
 		for(int j = 0; j < cost[i].length; j++)
 			line ~= new Point(i, j);
-		array ~= line;
+		matrix ~= line;
 	}
-	auto end = array[$ - 1][$ - 1];
-	array[0][0].distance = 0;
+	auto end = matrix[$ - 1][$ - 1];
+	matrix[0][0].distance = 0;
 	auto PQ = new PriorityQueue;
-	PQ.enqueue(array[0][0]);
+	PQ.enqueue(matrix[0][0]);
 	while(!PQ.isEmpty)
 	{
 		auto current = PQ.dequeue;
@@ -106,15 +106,15 @@ int dijkstra(int [][]cost)
 			break;
 		if(current.i - 1 >= 0)
 		{
-			auto next = array[current.i - 1][current.j];
+			auto next = matrix[current.i - 1][current.j];
 			auto next_cost = cost[current.i - 1][current.j];
 			next.distance = min(current.distance + next_cost, next.distance);
 			if(!next.visited)
 				PQ.enqueue(next);
 		}
-		if(current.i + 1 < array.length)
+		if(current.i + 1 < matrix.length)
 		{
-			auto next = array[current.i + 1][current.j];
+			auto next = matrix[current.i + 1][current.j];
 			auto next_cost = cost[current.i + 1][current.j];
 			next.distance = min(current.distance + next_cost, next.distance);
 			if(!next.visited)
@@ -122,15 +122,15 @@ int dijkstra(int [][]cost)
 		}
 		if(current.j - 1 >= 0)
 		{
-			auto next = array[current.i][current.j - 1];
+			auto next = matrix[current.i][current.j - 1];
 			auto next_cost = cost[current.i][current.j - 1];
 			next.distance = min(current.distance + next_cost, next.distance);
 			if(!next.visited)
 				PQ.enqueue(next);
 		}
-		if(current.j + 1 < array[0].length)
+		if(current.j + 1 < matrix[0].length)
 		{
-			auto next = array[current.i][current.j + 1];
+			auto next = matrix[current.i][current.j + 1];
 			auto next_cost = cost[current.i][current.j + 1];
 			next.distance = min(current.distance + next_cost, next.distance);
 			if(!next.visited)
