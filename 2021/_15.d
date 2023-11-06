@@ -9,8 +9,6 @@ class Point
 	{
 		this.i = i;
 		this.j = j;
-		this.distance = distance;
-		this.visited = visited;
 	}
 	bool opEquals(Point point)
 	{
