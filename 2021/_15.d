@@ -87,7 +87,6 @@ int part2()
 }
 int dijkstra(int [][]cost)
 {
-	auto end = new Point(cost.length - 1, cost[0].length - 1);
 	Point [][]array;
 	for(int i = 0; i < cost.length; i++)
 	{
@@ -96,6 +95,7 @@ int dijkstra(int [][]cost)
 			line ~= new Point(i, j);
 		array ~= line;
 	}
+	auto end = array[$ - 1][$ - 1];
 	array[0][0].distance = 0;
 	auto PQ = new PriorityQueue;
 	PQ.enqueue(array[0][0]);
@@ -137,7 +137,7 @@ int dijkstra(int [][]cost)
 				PQ.enqueue(next);
 		}
 	}
-	return array[$ - 1][$ - 1].distance;
+	return end.distance;
 }
 int[][] deep_copy(int [][]matrix)
 {
