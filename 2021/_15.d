@@ -5,7 +5,7 @@ class Point
 	alias opEquals = Object.opEquals;
 	int distance, i, j;
 	bool visited;
-	this(int i, int j, int distance = int.max, bool visited = false)
+	this(int i, int j)
 	{
 		this.i = i;
 		this.j = j;
