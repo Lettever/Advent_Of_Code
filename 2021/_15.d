@@ -12,17 +12,9 @@ class Point
 		this.distance = distance;
 		this.visited = visited;
 	}
-	void print()
-	{
-		writefln("%d %d %d %s", distance, i, j, visited);
-	}
 	bool opEquals(Point point)
 	{
 		return i == point.i && j == point.j; 
-	}
-	Point dup()
-	{
-		return new Point(i, j, distance, visited);
 	}
 }
 class PriorityQueue
