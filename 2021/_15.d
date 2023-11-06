@@ -3,7 +3,7 @@ import std;
 class Point
 {
 	alias opEquals = Object.opEquals;
-	int distance, i, j;
+	int distance = int.max, i, j;
 	bool visited;
 	this(int i, int j)
 	{
