@@ -87,7 +87,7 @@ int part2()
 	matrix.multiply;
 	return dijkstra(matrix);
 }
-int dijkstra(int [][]cost)	//assumes rectangular matrix
+int dijkstra(int [][]cost)
 {
 	auto end = new Point(cost.length - 1, cost[0].length - 1);
 	Point [][]array;
