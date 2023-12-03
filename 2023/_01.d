@@ -41,7 +41,3 @@ auto lines(string file)
         handle.close;
     return handle.byLine.map!(x => x.to!string).array;
 }
-int add(int a, int b)
-{
-	return a + b;
-}
