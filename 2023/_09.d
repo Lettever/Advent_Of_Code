@@ -24,7 +24,7 @@ long next_number(int[] arr, int part)
             temp ~= curr_arr[i] - curr_arr[i - 1];
         arrs ~= temp;
     }
-	return arrs.map!(x => x[$ - 1]).sum;
+    return arrs.map!(x => x[$ - 1]).sum;
 }
 bool all_zeros(int[] arr)
 {
