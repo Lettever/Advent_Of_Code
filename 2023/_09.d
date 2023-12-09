@@ -13,6 +13,8 @@ auto solve(int part)
 }
 long next_number(int[] arr, int part)
 {
+	if(part == 2)
+		arr = arr.reverse;
     auto arrs = [arr];
     while(!all_zeros(arrs[$ - 1]))
     {
@@ -22,12 +24,7 @@ long next_number(int[] arr, int part)
             temp ~= curr_arr[i] - curr_arr[i - 1];
         arrs ~= temp;
     }
-    if(part == 1)
-        return arrs.map!(x => x[$ - 1]).sum;
-    auto d = arrs.map!(x => x[0]).array;
-    foreach(i, ref v; d)
-        v *= pow(-1, i);
-    return d.sum;
+	return arrs.map!(x => x[$ - 1]).sum;
 }
 bool all_zeros(int[] arr)
 {
