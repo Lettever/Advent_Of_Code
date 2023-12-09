@@ -8,8 +8,7 @@ void main()
 
 auto solve(int part)
 {
-    return lines("file.txt").map!(x => x.split(" ").to!(int[])).array
-        .map!(x => next_number(x, part)).sum;
+    return lines("file.txt").map!(x => x.split(" ").to!(int[]).next_number(part)).sum;
 }
 long next_number(int[] arr, int part)
 {
