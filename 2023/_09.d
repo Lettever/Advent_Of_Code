@@ -14,7 +14,7 @@ auto solve(int part)
 long next_number(int[] arr, int part)
 {
     if(part == 2)
-		arr = arr.reverse;
+        arr = arr.reverse;
     auto arrs = [arr];
     while(!all_zeros(arrs[$ - 1]))
     {
