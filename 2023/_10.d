@@ -5,11 +5,11 @@ auto UP = [-1, 0], DOWN = [1, 0], LEFT = [0, -1], RIGHT = [0, 1];
 void main()
 {
 	writeln("part1 ", part1);
-    writeln("part2 ", part2);
+	writeln("part2 ", part2);
 }
 auto part1()
 {
-    auto lines = lines("file.txt");
+	auto lines = lines("file.txt");
 	int i, j;
 	outer:
 	for(i = 0; i < lines.length; i++)
