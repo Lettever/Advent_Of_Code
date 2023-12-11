@@ -85,11 +85,10 @@ void add(ref int i, ref int j, int[] dir)
 }
 long sholace_theorem(int[][] vertices)
 {
-	auto l_vertices = vertices.to!(long[][]);
 	long sum;
-	for(int i = 0; i < l_vertices.length - 1; i++)
-		sum += (l_vertices[i][0] * l_vertices[i + 1][1] - l_vertices[i + 1][0]*l_vertices[i][1]);
-	sum += (l_vertices[$ - 1][0] * l_vertices[0][1] - l_vertices[0][0]*l_vertices[$ - 1][1]);
+	for(int i = 0; i < vertices.length - 1; i++)
+		sum += vertices[i][0] * vertices[i + 1][1] - vertices[i + 1][0] * vertices[i][1];
+	sum += vertices[$ - 1][0] * vertices[0][1] - vertices[0][0] * vertices[$ - 1][1];
 	return sum / 2;
 }
 auto lines(string file)
