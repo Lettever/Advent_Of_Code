@@ -74,13 +74,13 @@ bool contain_galaxies_columns(string[] universe, int column)
 }
 void add_row(int[][] mat, int row, int part)
 {
-	int inc = part == 1 ? 1 : 1000000 - 1;
+	int inc = (part == 1 ? 2 : 1000000) - 1;
 	for(int i = 0; i < mat.length; i++)
 		mat[row][i] += inc;
 }
 void add_column(int[][] mat, int column, int part)
 {
-	int inc = part == 1 ? 1 : 1000000 - 1;
+	int inc = (part == 1 ? 2 : 1000000) - 1;
 	for(int i = 0; i < mat[column].length; i++)
 		mat[i][column] += inc;
 }
