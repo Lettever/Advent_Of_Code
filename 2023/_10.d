@@ -50,8 +50,7 @@ auto part2()
 	}while((i != vertices[0][0]) || (j != vertices[0][1]));
 	return sholace_theorem(vertices) - length / 2 + 1; //picks theorem
 }
-//564 is to high
-//8761 is too high
+
 void change_direction(ref int[] dir, char pipe)
 {
 	if(pipe == '|' || pipe == '-' || pipe == 'S')
