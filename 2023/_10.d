@@ -55,28 +55,11 @@ void change_direction(ref int[] dir, char pipe)
 {
 	if(pipe == '|' || pipe == '-' || pipe == 'S')
 		return;
-	if(pipe == 'L')
-		if(dir == DOWN)
-			dir = RIGHT;
-		else
-			dir = UP;
-	else if(pipe == 'J')
-		if(dir == DOWN)
-			dir = LEFT;
-		else
-			dir = UP;
-	else if(pipe == '7')
-		if(dir == RIGHT)
-			dir = DOWN;
-		else
-			dir = LEFT;
-	else if(pipe == 'F')
-		if(dir == UP)
-			dir = RIGHT;
-		else
-			dir = DOWN;
-	else
-		assert(0);
+	dir = pipe == 'L' ? [UP, RIGHT][dir == DOWN] :
+		  pipe == 'F' ? [RIGHT, DOWN][dir == LEFT] :
+		  pipe == '7' ? [DOWN, LEFT][dir == UP]:
+		  pipe == 'J' ? [LEFT, UP][dir == RIGHT]:
+		  assert(0);
 }
 void add(ref int i, ref int j, int[] dir)
 {
