@@ -24,7 +24,7 @@ auto solve(int part)
 	{
 		if(!universe.contain_galaxies_row(i))
 			cost.add_row(i, part);
-		for(int j = 0; j < universe.length; j++)
+		for(int j = 0; j < universe[i].length; j++)
 			if(universe[i][j] == '#')
 				galaxies ~= Point(i, j);
 	}
