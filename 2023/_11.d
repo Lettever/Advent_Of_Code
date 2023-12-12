@@ -17,7 +17,7 @@ void main()
 
 auto solve(int part)
 {
-    auto universe = lines("file.txt");
+	auto universe = lines("file.txt");
 	auto cost = universe.map!(x => x.map!(y => 1).array).array;
 	Point[] galaxies;
 	for(int i = 0; i < universe.length; i++)
