@@ -21,8 +21,8 @@ auto part1()
 	do
 	{
 		add(i, j, dir);
-		length++;
 		change_direction(dir, lines[i][j]);
+		length++;
 	}while(lines[i][j] != 'S');
 	return length / 2;
 }
