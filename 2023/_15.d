@@ -20,29 +20,34 @@ auto part1()
 }
 auto part2()
 {
-    auto arr = new Lens[][](256);
+    auto boxes = new Lens[][](256);
     foreach(elem; lines("file.txt")[0].split(","))
     {
         if(elem[$ - 1] == '-')
         {
             auto name = elem[0 .. $ - 1];
             auto h = hash(name);
-            arr[h] = arr[h].remove!(x => x.name == name);
+            foreach(i, lens; boxes[h])
+                if(lens.name == name)
+                {
+                    boxes[h] = boxes[h].remove(i);
+                    break; 
+                }
         }
         else
         {
             auto a = elem.split("=");
-            int i = arr[hash(a[0])].countUntil!(x => x.name == a[0]);
+            int i = boxes[hash(a[0])].countUntil!(x => x.name == a[0]);
             if(i == -1)
-                arr[hash(a[0])] ~= Lens(a[0], a[1].to!int);
+                boxes[hash(a[0])] ~= Lens(a[0], a[1].to!int);
             else
-                arr[hash(a[0])][i].length = a[1].to!int;
+                boxes[hash(a[0])][i].length = a[1].to!int;
         }
     }
     long total;
-    for(int i = 0; i < arr.length; i++)
-        for(int j = 0; j < arr[i].length; j++)
-            total += (i + 1) * (j + 1) * arr[i][j].length;
+    foreach(i, box; boxes)
+        foreach(j, lens; box)
+            total += (i + 1) * (j + 1) * lens.length;
     return total;
 }
 int hash(string str)
