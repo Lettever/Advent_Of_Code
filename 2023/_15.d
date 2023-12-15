@@ -27,12 +27,7 @@ auto part2()
         {
             auto name = elem[0 .. $ - 1];
             auto h = hash(name);
-            foreach(i; 0 .. arr[h].length)
-                if(arr[h][i].name == name)
-                {
-                    arr[h] = arr[h].remove(i);
-                    break;
-                }
+            arr[h] = arr[h].remove!(x => x.name == name);
         }
         else
         {
