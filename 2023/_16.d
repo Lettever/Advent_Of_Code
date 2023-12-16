@@ -1,4 +1,4 @@
-import std;
+import std;;
 
 auto UP = [-1, 0], RIGHT = [0, 1], DOWN = [1, 0], LEFT = [0, -1];
 
@@ -7,6 +7,7 @@ void main()
     writeln("part1 ", part1);
     writeln("part2 ", part2);
 }
+
 auto part1()
 {
     return solve(lines("input.txt"));
@@ -17,25 +18,19 @@ auto part2()
     int result;
     foreach(i; 0 .. input.length)
     {
-        result = max(result, solve(input, i, 0, LEFT));
-        result = max(result, solve(input, i, 0, UP));
-        result = max(result, solve(input, i, 0, RIGHT));
-        result = max(result, solve(input, i, 0, DOWN));
-        result = max(result, solve(input, i, input[0].length - 1U, LEFT));
-        result = max(result, solve(input, i, input[0].length - 1U, UP));
-        result = max(result, solve(input, i, input[0].length - 1U, RIGHT));
-        result = max(result, solve(input, i, input[0].length - 1U, DOWN));
+        foreach(dir; [LEFT, RIGHT, DOWN, UP])
+        {
+            result = max(result, solve(input, i, 0, dir));
+            result = max(result, solve(input, i, input[0].length - 1U, dir));
+        }
     }
     foreach(j; 0 .. input[0].length)
     {
-        result = max(result, solve(input, 0, j, LEFT));
-        result = max(result, solve(input, 0, j, UP));
-        result = max(result, solve(input, 0, j, RIGHT));
-        result = max(result, solve(input, 0, j, DOWN));
-        result = max(result, solve(input, input.length - 1U, j, LEFT));
-        result = max(result, solve(input, input.length - 1U, j, UP));
-        result = max(result, solve(input, input.length - 1U, j, RIGHT));
-        result = max(result, solve(input, input.length - 1U, j, DOWN));
+        foreach(dir; [LEFT, RIGHT, DOWN, UP])
+        {
+            result = max(result, solve(input, 0, j, dir));
+            result = max(result, solve(input, input.length - 1U, j, dir));
+        }
     }
     return result;
 }
@@ -60,8 +55,6 @@ int solve(string[] input, int i2 = 0, int j2 = 0, int[] dir2 = RIGHT)
                 total++;
             visited[i][j][0] = true;
             visited[i][j][1] ~= dir;
-            if(i < 0 || i >= input.length || j < 0 || j >= input[0].length)
-                return;
             if(input[i][j] == '\\')
             {
                 if(dir == UP)
