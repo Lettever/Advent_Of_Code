@@ -4,7 +4,6 @@ auto UP = [-1, 0], RIGHT = [0, 1], DOWN = [1, 0], LEFT = [0, -1];
 
 void main()
 {
-    writeln("start");
     writeln("part1 ", part1);
     writeln("part2 ", part2);
 }
