@@ -2,72 +2,42 @@ import std;
 
 struct Point
 {
-    int x, y;
-    this(int x, int y)
+    long x, y;
+    this(long x, long y)
     {
         this.x = x;
         this.y = y;
     }
-    auto opBinary(string op : "+")(const Point rhs) const
-    {
-        return Point(x + rhs.x, y + rhs.y); 
-    }
-    auto opBinary(string op : "*")(const int scalar) const
-    {
-        return Point(x * scalar, y * scalar); 
-    }
     void opOpAssign(string op : "+")(Point rhs)
     {
-        this = this + rhs;
-    }
-    void opOpAssign(string op : "*")(int scalar)
-    {
-        this = this * scalar;
+        this.x += rhs.x;
+		this.y += rhs.y;
     }
 }
 
 void main()
 {
-    writeln("part1 ", part1);
-    writeln("part2 ", part2);
+    writeln("part1 ", solve(1));
+    writeln("part2 ", solve(2));
 }
-auto part1()
+long solve(int part)
 {
-    auto input = lines("test.txt");
-    long total; 
-    auto vertices = [Point(0, 0)];
-    foreach(line; input)
-    {
-        auto h = line.split(" ");
-        auto n = vertices[$ - 1];
-        total += h[1].to!int;
-        if(h[0] == "U")
-            vertices ~= n + Point(0, -1) * (h[1].to!int);
-        else if(h[0] == "D")
-            vertices ~= n + Point(0, 1) * (h[1].to!int);
-        else if(h[0] == "R")
-            vertices ~= n + Point(1, 0) * (h[1].to!int);
-        else if(h[0] == "L")
-            vertices ~= n + Point(-1, 0) * (h[1].to!int);
-        else
-            writeln("idk");
-    }
-    writeln(total);
-    writeln(vertices);
-    writeln(sholace_theorem(vertices));
-    return sholace_theorem(vertices) - total / 2 + 1;
-    //i = 38
-    //A = 42
-    //62
-    //A = i + b /2  - 1
-    //i = A - b / 2 + 1
-    //A + i = ?
-    //2 * A - b / 2 + 1
-}
-//129108 is too high
-auto part2()
-{
-    return 0;
+	auto str = part == 1 ? "UDRL" : "3102";
+	long length;
+	Point[] vertices;
+	auto cursor = Point(0, 0);
+	foreach(line; lines("input.txt"))
+	{
+		auto h = line.split(" ");
+		auto num = part == 1 ? h[1].to!long : hex_to_long(h[2][2 .. $ - 2]);
+		auto ch = part == 1 ? h[0][0] : h[2][$ - 2];
+		length += num;
+		auto arr = [Point(0, -num), Point(0, num), Point(num, 0), Point(-num, 0)];
+		auto p = arr[str.indexOf(ch)];
+		cursor += p;
+		vertices ~= cursor;
+	}
+    return sholace_theorem(vertices) + length / 2 + 1;
 }
 long sholace_theorem(Point[] vertices)
 {
@@ -75,6 +45,11 @@ long sholace_theorem(Point[] vertices)
 	for(int i = 0; i < vertices.length - 1U; i++)
 		sum += vertices[i].x * vertices[i + 1].y - vertices[i + 1].x * vertices[i].y;
 	return sum / 2;
+}
+long hex_to_long(string hex)
+{
+	auto str = "0123456789abcdef";
+	return hex.fold!((a, b) => a * 16 + str.indexOf(b))(0);
 }
 auto lines(string file)
 {
