@@ -21,6 +21,7 @@ void main()
 	//creates the tree
 	//we ignore the first command because otherwise we would create the root twice
 	auto cursor = new Folder();
+	auto root = cursor;
 	foreach(line; lines("input.txt")[1 .. $])
 		if(line == "$ ls" || line[0] == 'd')
 			continue;
@@ -33,13 +34,11 @@ void main()
 		}
 		else
 			cursor.size += line.split(" ")[0].to!long;
-	//sets the cursor to be the root
-	while(cursor.parent !is null)
+	while(cursor !is null)
 		cursor = cursor.prev;
-	cursor.size += cursor.folders.fold!((acc, x) => acc + x.size)(0L);
-	auto sizes = sizes(cursor);
+	auto sizes = sizes(root);
 	writeln("part1 ", sizes.filter!(x => x <= 100000).sum);
-	writeln("part2 ", sizes.filter!(x => x > (cursor.size - 40000000)).minElement);
+	writeln("part2 ", sizes.filter!(x => x > (root.size - 40000000)).minElement);
 }
 long[] sizes(Folder cursor) => cursor.folders.fold!((acc, x) => acc ~ sizes(x))([cursor.size]);
 auto lines(string file)
