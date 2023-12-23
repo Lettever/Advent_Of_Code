@@ -26,7 +26,7 @@ void main()
 		if(line == "$ ls" || line[0] == 'd')
 			continue;
 		else if(line == "$ cd ..")
-			cursor = cursor.prev();
+			cursor = cursor.prev;
 		else if(line[0] == '$')
 		{
 			cursor.append(new Folder());
