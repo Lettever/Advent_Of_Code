@@ -14,15 +14,16 @@ auto solve(int part)
             if(e.diff(axis).sum == part - 1)
             {
                 total += axis;
-                break;
+                goto here;
             }
         e = rotate(e);
         foreach(axis; 1 .. e[0].length)
             if(e.diff(axis).sum == part - 1)
             {
                 total += 100 * axis;
-                break;
+                goto here;
             }
+        here:
     }
     return total;
 }
