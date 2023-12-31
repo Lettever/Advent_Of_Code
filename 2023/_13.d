@@ -43,6 +43,7 @@ int[] diff(char[][] matrix, int axis)
 {
     auto a = matrix.map!(x => x.map!(y => y == '#' ? 1 : 0).array);
     auto d = a.map!(x => zip(x[0 .. axis].dup.reverse, x[axis .. $]));
+    //return d.map!(x => x.fold!((acc, y) => acc + abs(y[1] - y[0]))(0).array;
     int[] f;
     foreach(t; d)
     {
