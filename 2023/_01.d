@@ -12,28 +12,23 @@ int part1()
 }
 int part2()
 {
-    return lines("file.txt").map!(x => x
+    return solve(lines("file.txt").map!(x => x
 		.replace("one", "o1e")
 		.replace("two", "t2o")
-		.replace("three", "t3ree")
-		.replace("four", "f4ur")
-		.replace("five", "f5ve")
+		.replace("three", "t3e")
+		.replace("four", "f4r")
+		.replace("five", "f5e")
 		.replace("six", "s6x")
-		.replace("seven", "s7ven")
-		.replace("eight", "e8ght")
-		.replace("nine", "n9ne")
-	).array.solve;
+		.replace("seven", "s7n")
+		.replace("eight", "e8t")
+		.replace("nine", "n9e")
+	).array);
 }
 int solve(string[] strs)
 {
-	int sum;
-	foreach(line; strs)
-	{
-		auto filtered = line.filter!(x => digits.canFind(x)).to!string;
-		sum += ("" ~ filtered[0] ~ filtered[$ - 1]).to!int;
-	}
-    return sum;	
+	return strs.fold!((acc, x) => acc + func(x.filter!(y => digits.canFind(y)).to!string).to!int)(0);
 }
+string func(string str) => "" ~ str[0] ~ str[$ - 1];
 auto lines(string file)
 {
     File handle = File(file, "r");
