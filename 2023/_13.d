@@ -23,7 +23,7 @@ auto solve(int part)
                 total += 100 * axis;
                 break;
             }
-        }
+    }
     return total;
 }
 char[][] rotate(char[][] matrix)
