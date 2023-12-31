@@ -1,15 +1,10 @@
 import std;
-import std.datetime.stopwatch;
 
 void main()
 {
     writeln("part1 ", solve(1));
     writeln("part2 ", solve(2));
-    auto dur = benchmark!(part1, part2)(1);
-    dur.each!(x => writeln(x));
 }
-auto part1() => solve(1);
-auto part2() => solve(2);
 auto solve(int part)
 {
     int total;
