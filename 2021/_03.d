@@ -1,58 +1,46 @@
-import std.stdio;
-import std.algorithm;
-import std.string;
-import std.conv;
+import std;
 
 void main()
 {
-    writeln("part1 ", part1);
-    writeln("part2 ", part2);
+    writeln("part1 ", part1() == 1025636);
+    writeln("part2 ", part2() == 793873);
 }
-int part1()
+auto part1()
 {
-    File input = File("file.txt", "r");
-    int [12][2]matrix;
-    while(!input.eof)
-    {
-        string line = input.readln.chomp;
-        if(line.length == 0)
-            break;
-        foreach(index, value; line)
-            matrix[value - '0'][index]++;
-    }
-    input.close;
-    int gamma, epsilon;
-    for(int i = 0; i < 12; i++)
-    {
-        int max = matrix[1][i] > matrix[0][i];
-        int min = 1 - max;
-        gamma = gamma * 2 + max;
-        epsilon = epsilon * 2 + min;
-    }
-    return gamma * epsilon;
+    auto elem_arr = lines("input.txt").rotate().map!elements.array();
+    auto rates = elem_arr.fold!((acc, x) => tuple(acc[0] ~ x[0].key, acc[1] ~ x[1].key))(tuple("", ""));
+    return rates[0].to!int(2) * rates[1].to!int(2);
 }
-int part2()
+auto part2()
 {
-    File input = File("file.txt", "r");
-    int [12][2]matrix;
-    string []lines;
-    while(!input.eof)
+    auto input = lines("input.txt");
+    return input.get_rate(0).to!int(2) * input.get_rate(1).to!int(2);
+}
+string vertical_slice(string[] map, int j) => iota(map.length).map!(x => map[x][j]).array();
+string[] rotate(string[] mat) => iota(mat[0].length).map!(x => mat.vertical_slice(x)).array();
+auto elements(string str)
+{
+    int[char] m;
+    foreach(ch; str)
+        m[ch]++;
+    return m.byPair().array().sort!((a, b) => a[1] < b[1]).array();
+}
+string get_rate(string[] input, int n)
+{
+    return iota(12).fold!((acc, x)
     {
-        string line = input.readln.chomp;
-        if(line.length == 0)
-            break;
-        lines ~= line;
-        foreach(index, value; line)
-            matrix[value - '0'][index]++;
-    }
-    input.close;
-    int [12]max, min;
-    for(int i = 0; i < 12; i++)
-    {
-        max[i] = matrix[1][i] > matrix[0][i];
-        min[i] = 1 - max[i];
-    }
-    string []oxygen = lines.dup;
-    string []scrubber = lines.dup;
-    return -1;
+        if(input.length == 1)
+            return input[0];
+        auto elem = input.vertical_slice(x).elements();
+        acc ~= elem[0].value == elem[1].value ? '0' + n : elem[n].key;
+        input = input.filter!(y => y.startsWith(acc)).array();
+        return acc;
+    })("");
+}
+auto lines(string file)
+{
+    File handle = File(file, "r");
+    scope(exit)
+        handle.close;
+    return handle.byLine.map!(x => x.to!string).array;
 }
