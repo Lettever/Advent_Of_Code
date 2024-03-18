@@ -5,8 +5,8 @@ alias Fighter = Tuple!(int, "health", int, "damage", int, "armor");
 
 void main()
 {
-    writeln("part1 ", solve(1) == 91);
-    writeln("part2 ", solve(2) == 158);
+    writeln("part1 ", solve(1));
+    writeln("part2 ", solve(2));
 }
 int solve(int part)
 {
