@@ -2,8 +2,8 @@ import std;
 
 void main()
 {
-    writeln("part1 ", solve(1) == 222870);
-    writeln("part2 ", solve(2) == 117936);
+    writeln("part1 ", solve(1));
+    writeln("part2 ", solve(2));
 }
 auto solve(int part)
 {
