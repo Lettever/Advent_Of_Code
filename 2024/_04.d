@@ -20,7 +20,7 @@ void main() {
     writeln(part1);
     int part2 = 0;
     for (int i = 1; i < lines.length - 1; i++) {
-        for (int j = 1; j < lines[0].length; j++) {
+        for (int j = 1; j < lines[0].length - 1; j++) {
             if (lines[i][j] != 'A') {
                 continue;
             }
